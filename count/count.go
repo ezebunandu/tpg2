@@ -72,13 +72,14 @@ func (c *counter) Lines() int {
     return lines
 }
 
-func Main(){
+func Main() int {
     c, err := NewCounter(
         WithInputFromArgs(os.Args[1:]),
     )
     if err != nil {
         fmt.Fprintln(os.Stderr, err)
-        os.Exit(1)
+        return 1
     }
     fmt.Println(c.Lines())
+    return 0
 }
