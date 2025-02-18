@@ -49,6 +49,17 @@ func WithOutput(output io.Writer) option {
     }
 }
 
+func WithInputFromArgs(args []string) option {
+    return func(c *counter) error {
+        f, err := os.Open(args[0])
+        if err != nil {
+            return err
+        }
+        c.input = f
+        return nil
+    }
+}
+
 func (c *counter) Lines() int {
     lines := 0
     input := bufio.NewScanner(c.input)
