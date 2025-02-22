@@ -1,0 +1,5 @@
+exec count -bytes input.txt
+stdout '^28\n$'
+
+-- input.txt --
+this line contains 28 bytes
