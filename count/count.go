@@ -107,6 +107,7 @@ func (c *counter) Bytes() int {
 	return bytes
 }
 
+
 func Main() int {
 	lineMode := flag.Bool("lines", false, "count lines, not words")
 	byteMode := flag.Bool("bytes", false, "count bytes, not words")
