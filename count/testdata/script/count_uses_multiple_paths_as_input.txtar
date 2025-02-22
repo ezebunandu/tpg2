@@ -1,0 +1,10 @@
+exec count input1.txt input2.txt
+stdout '^5\n$'
+
+-- input1.txt --
+this is
+three lines
+for the test
+-- input2.txt --
+and another
+two lines
