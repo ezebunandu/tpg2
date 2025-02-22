@@ -1,0 +1,8 @@
+stdin one_matching_line.txt
+exec match hello
+stdout '^this line contains hello and should match\n'
+
+-- one_matching_line.txt --
+this is line should not match
+this line contains hello and should match
+this line should not match
