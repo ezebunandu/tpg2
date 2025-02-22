@@ -23,6 +23,20 @@ func TestLines_CountsLinesInInput(t *testing.T) {
 	}
 }
 
+func TestWords_CountsWordsInInput(t *testing.T) {
+	t.Parallel()
+	inputBuf := bytes.NewBufferString("one two three four\n")
+	c, err := count.NewCounter(count.WithInput(inputBuf))
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := 4
+	got := c.Words()
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
+
 func TestWithInputFromArgs_SetsInputToGivenPath(t *testing.T) {
 	t.Parallel()
 	args := []string{"testdata/three_lines.txt"}
@@ -66,6 +80,7 @@ func Test(t *testing.T) {
 
 func TestMain(m *testing.M) {
 	os.Exit(testscript.RunMain(m, map[string]func() int{
-		"count": count.Main,
+		"lines": count.MainLines,
+		"words": count.MainWords,
 	}))
 }
