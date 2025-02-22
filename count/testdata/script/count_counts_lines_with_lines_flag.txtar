@@ -1,0 +1,7 @@
+exec count -lines input.txt
+stdout '^3\n$'
+
+-- input.txt --
+this is
+three lines
+for the test

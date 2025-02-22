@@ -1,0 +1,7 @@
+exec count input.txt
+stdout '^7\n$'
+
+-- input.txt --
+this is
+three lines
+for the test

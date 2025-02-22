@@ -1,8 +1,0 @@
-stdin three_lines.txt
-exec count
-stdout '^3\n$'
-
--- three_lines.txt --
-this is
-three lines
-for the test
