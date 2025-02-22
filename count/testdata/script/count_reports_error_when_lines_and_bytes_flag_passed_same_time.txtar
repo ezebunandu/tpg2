@@ -1,0 +1,4 @@
+! exec count -bytes -lines input.txt
+stderr 'cannot pass lines and bytes flag at the same time'
+
+-- input.txt --

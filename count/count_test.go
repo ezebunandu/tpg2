@@ -80,7 +80,6 @@ func Test(t *testing.T) {
 
 func TestMain(m *testing.M) {
 	os.Exit(testscript.RunMain(m, map[string]func() int{
-		"lines": count.MainLines,
-		"words": count.MainWords,
+		"count": count.Main,
 	}))
 }
