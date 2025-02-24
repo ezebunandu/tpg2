@@ -1,0 +1,5 @@
+# With path and -size flag, create file with required size
+! exists zeroes.dat
+exec writefile -size 1000 zeroes.dat
+exec mkfile 1000 golden.dat
+cmp zeroes.dat golden.dat
