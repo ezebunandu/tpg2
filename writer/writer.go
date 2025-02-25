@@ -22,7 +22,7 @@ Example: writefile -size 1000 zeroes.dat`
 
 func Main() int {
     if len(os.Args) < 2 {
-        fmt.Println(Usage)
+        fmt.Fprintln(os.Stderr, Usage)
         return 1
     }
     size := flag.Int("size", 0, "Size in bytes")
