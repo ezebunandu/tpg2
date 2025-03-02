@@ -5,7 +5,6 @@ import (
 	"io/fs"
 	"os"
 	"time"
-
 )
 
 func OlderFiles(fsys fs.FS, age time.Duration) (paths []string) {
@@ -32,19 +31,19 @@ Example: older 24h
 
 func Main() int {
 	if len(os.Args) < 2 {
-        fmt.Println(Usage)
-        return 1
-    }
+		fmt.Println(Usage)
+		return 1
+	}
 
-    age, err := time.ParseDuration(os.Args[1])
-    if err != nil {
-        fmt.Fprintln(os.Stderr, err)
-        return 1
-    }
-    fsys := os.DirFS(".")
-    paths := OlderFiles(fsys, age)
-    for _, p := range paths {
-        fmt.Println(p)
-    }
+	age, err := time.ParseDuration(os.Args[1])
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return 1
+	}
+	fsys := os.DirFS(".")
+	paths := OlderFiles(fsys, age)
+	for _, p := range paths {
+		fmt.Println(p)
+	}
 	return 0
 }
