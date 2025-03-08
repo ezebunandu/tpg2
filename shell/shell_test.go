@@ -1,7 +1,10 @@
 package shell_test
 
 import (
+	"bytes"
+	"io"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/ezebunandu/shell"
@@ -41,5 +44,19 @@ func TestNewSession_CreatesExpectedSession(t *testing.T){
 
     if want != got {
         t.Errorf("want %#v, got %#v", want, got)
+    }
+}
+
+func TestRun_ProducesExpectedOutput(t *testing.T){
+    t.Parallel()
+    stdin := strings.NewReader("echo hello\n\n")
+    stdout := new(bytes.Buffer)
+    session := shell.NewSession(stdin, stdout, io.Discard)
+    session.DryRun = true
+    session.Run()
+    want := "> echo hello\n> > \nUntil next time, earthling!"
+    got := stdout.String()
+    if !cmp.Equal(want, got){
+        t.Error(cmp.Diff(want, got))
     }
 }
