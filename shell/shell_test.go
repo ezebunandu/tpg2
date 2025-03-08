@@ -39,6 +39,8 @@ func TestNewSession_CreatesExpectedSession(t *testing.T){
         Stdin: os.Stdin,
         Stdout: os.Stdout,
         Stderr: os.Stderr,
+        DryRun: false,
+        Transcript: io.Discard,
     }
     got := *shell.NewSession(os.Stdin, os.Stdout, os.Stderr)
 
@@ -54,9 +56,24 @@ func TestRun_ProducesExpectedOutput(t *testing.T){
     session := shell.NewSession(stdin, stdout, io.Discard)
     session.DryRun = true
     session.Run()
-    want := "> echo hello\n> > \nUntil next time, earthling!"
+    want := "> echo hello\n> > \nUntil next time, earthling!\n"
     got := stdout.String()
     if !cmp.Equal(want, got){
         t.Error(cmp.Diff(want, got))
+    }
+}
+
+func TestRunProducesExpectedTranscript(t *testing.T) {
+	t.Parallel()
+    in := strings.NewReader("echo hello\n\n")
+    transcript := new(bytes.Buffer)
+    session := shell.NewSession(in, io.Discard, io.Discard)
+    session.DryRun = true
+    session.Transcript = transcript
+    session.Run()
+    want := "> echo hello\n> > \nUntil next time, earthling!"
+    got := transcript.String()
+    if !cmp.Equal(want, got) {
+        cmp.Diff(want, got)
     }
 }
