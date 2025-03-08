@@ -1,12 +1,13 @@
 package shell
 
 import (
+	"bufio"
 	"errors"
+	"fmt"
 	"io"
+	"os"
 	"os/exec"
 	"strings"
-    "fmt"
-    "bufio"
 )
 
 func CmdFromString(input string) (*exec.Cmd, error) {
@@ -54,4 +55,9 @@ func (s *Session) Run() {
         fmt.Fprintf(s.Stdout, "%s>", output)
     }
     fmt.Fprint(s.Stdout, "\nUntil next time, earthling!")
+}
+
+func Main(){
+    session := NewSession(os.Stdin, os.Stdout, os.Stderr)
+    session.Run()
 }
