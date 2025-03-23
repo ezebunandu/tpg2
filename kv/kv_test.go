@@ -34,28 +34,24 @@ func TestGet__ReturnsValueAndOKIfKeyExists(t *testing.T) {
 		t.Fatal("not ok")
 	}
 	if want != v {
-		t.Errorf("want: %s, got: %s", want, v)
+		t.Errorf("want: %s, got: %q", want, v)
 	}
 }
 
-func TestSet__UpdatesExistingValue(t *testing.T) {
+func TestSet__UpdatesExistingKeyToNewValue(t *testing.T) {
 	t.Parallel()
 	s, err := kv.OpenStore("dummy path")
 	if err != nil {
 		t.Fatal(err)
 	}
 	s.Set("key", "value")
-	if err != nil {
-		t.Fatal(err)
-	}
 	s.Set("key", "updated")
-	want := "updated"
 	v, ok := s.Get("key")
 	if !ok {
-		t.Fatal("not ok")
+		t.Fatal("key not found")
 	}
-	if want != v {
-		t.Errorf("want: %s, got: %s", want, v)
+	if v != "updated" {
+		t.Errorf("want 'updated', got %q", v)
 	}
 }
 
