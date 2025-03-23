@@ -1,6 +1,7 @@
 package kv_test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/ezebunandu/kv"
@@ -82,4 +83,40 @@ func TestSave__SavesDataPersistently(t *testing.T) {
 	if v, _ := s2.Get("C"); v != "3" {
 		t.Fatalf("want C=3, got C=%s", v)
 	}
+}
+
+func TestOpenStore__ErrorsWhenPathUnreadable(t *testing.T){
+    t.Parallel()
+    path := t.TempDir() + "/unreadable.store"
+    if _, err := os.Create(path); err != nil {
+        t.Fatal(err)
+    }
+    if err := os.Chmod(path, 0o000); err != nil {
+        t.Fatal(err)
+    }
+    _, err := kv.OpenStore(path)
+    if err == nil {
+        t.Fatal("want an error but got none")
+    }
+}
+
+
+func TestOpenStore__ReturnsErrorOnInvalidData(t *testing.T){
+    t.Parallel()
+    _, err := kv.OpenStore("testdata/invalid.store")
+    if err == nil {
+        t.Fatal("no error")
+    }
+}
+
+func TestSave__ErrorsWhenPathUnwriteable(t *testing.T){
+    t.Parallel()
+    s, err := kv.OpenStore("bogus/unwritable.store")
+    if err != nil {
+        t.Fatal(err)
+    }
+    err = s.Save()
+    if err == nil {
+        t.Fatal("want error and got none")
+    }
 }
